@@ -6,19 +6,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Controlador para a página "Sobre" do e-commerce.
+ * Controlador para gerenciar a página do perfil do usuário.
  */
 @RestController
-public class SobreController {
+@RequestMapping("/user")
+public class UserController {
 
     /**
-     * Retorna a descrição sobre o e-commerce.
+     * Endpoint para obter o perfil do usuário.
      *
-     * @return Mensagem sobre o e-commerce.
+     * @return Mensagem de perfil do usuário.
      */
-    @GetMapping("/sobre")
-    public ResponseEntity<String> sobre() {
+    @GetMapping("/profile")
+    public ResponseEntity<String> getUserProfile() {
         // Retorna uma resposta com status 200 OK
-        return ResponseEntity.ok("Esta é a página sobre o e-commerce!");
+        return ResponseEntity.ok("User Profile");
     }
 }

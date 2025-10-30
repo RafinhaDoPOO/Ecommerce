@@ -1,110 +1,62 @@
 package com.example.ecommerce.Entity;
 
-import java.time.Instant;
+import jakarta.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tb_users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID userid;
+    @GeneratedValue(generator = "UUID")
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
 
-    @Column(name = "nome", nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
-
-    @Column(name = "senha", nullable = false)
+    @Column(nullable = false)
     private String password;
 
-    @CreationTimestamp
-    @Column(name = "creation_timestamp", updatable = false)
-    private Instant creationTimeStamp;
+    @Column(nullable = false, unique = true)
+    private String email;
 
-    @UpdateTimestamp
-    @Column(name = "update_timestamp")
-    private Instant updateTimeStamp;
-
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
-        name = "tb_users_roles",
+        name = "user_roles",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
-    // Construtores, Getters e Setters
+    // Construtor padrão
     public User() {
+        this.id = UUID.randomUUID(); // Garante que um UUID é gerado se o JPA não o fizer
     }
 
-    public User(String username, String email, String password) {
+    // Construtor com parâmetros
+    public User(String username, String password, String email) {
+        this.id = UUID.randomUUID();
         this.username = username;
-        this.email = email;
         this.password = password;
-    }
-
-    public UUID getUserid() {
-        return userid;
-    }
-
-    public void setUserid(UUID userid) {
-        this.userid = userid;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
+    // Getters e Setters
+    public UUID getId() { return id; }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
+    
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+    
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public Instant getCreationTimeStamp() {
-        return creationTimeStamp;
-    }
-
-    public void setCreationTimeStamp(Instant creationTimeStamp) {
-        this.creationTimeStamp = creationTimeStamp;
-    }
-
-    public Instant getUpdateTimeStamp() {
-        return updateTimeStamp;
-    }
-
-    public void setUpdateTimeStamp(Instant updateTimeStamp) {
-        this.updateTimeStamp = updateTimeStamp;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
+    public Set<Role> getRoles() { return roles; }
+    public void addRole(Role role) { this.roles.add(role); }
+    public void removeRole(Role role) { this.roles.remove(role); }
 }
