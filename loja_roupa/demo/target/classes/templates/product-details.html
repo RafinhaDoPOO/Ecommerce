@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${product.name} + ' - Detalhes Loja Rocket'"></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f7f6;
+        }
+
+        .main-container {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        .img-container {
+            background-color: #fff;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px 0 0 20px;
+        }
+
+        .product-img {
+            max-width: 100%;
+            height: auto;
+            max-height: 600px;
+            object-fit: contain;
+        }
+
+        .admin-section {
+            background-color: #fff5f5;
+            border-top: 2px solid #fee2e2;
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .img-container {
+                border-radius: 20px 20px 0 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <div class="container main-container py-5">
+        <div class="product-card">
+            <div class="row g-0">
+
+                <div class="col-md-6 img-container border-end">
+                    <img th:src="${product.imageUrl != null ? product.imageUrl : 'https://via.placeholder.com/600'}"
+                        class="product-img" alt="Estampa da Blusa">
+                </div>
+
+                <div class="col-md-6 p-5 d-flex flex-column justify-content-center">
+
+                    <nav aria-label="breadcrumb" class="mb-3">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/products/list">Loja</a></li>
+                            <li class="breadcrumb-item active" th:text="${product.name}">Produto</li>
+                        </ol>
+                    </nav>
+
+                    <h1 class="display-4 fw-bold mb-3" th:text="${product.name}">Nome</h1>
+                    <h2 class="text-primary fw-bold display-6 mb-4" th:text="'R$ ' + ${product.price}">R$ 0,00</h2>
+
+                    <div class="mb-4">
+                        <span class="text-muted text-uppercase fw-bold small d-block mb-2">Tamanhos</span>
+                        <div class="d-flex gap-2">
+                            <span class="badge bg-dark px-4 py-2 fs-6" th:text="${product.size}">M</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <span class="text-muted text-uppercase fw-bold small d-block mb-2">Sobre a estampa</span>
+                        <p class="fs-5 text-secondary" th:text="${product.description}">Descrição...</p>
+                    </div>
+
+                    <div class="mb-5">
+                        <span class="badge bg-light text-dark border p-2">
+                            Estoque: <span th:text="${product.qty_stock}">0</span> un
+                        </span>
+                    </div>
+
+                    <div class="d-grid gap-3">
+                        <form th:action="@{/cart/add/{id}(id=${product.id})}" method="post" class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg py-3 fw-bold shadow-sm">
+                                Adicionar ao Carrinho
+                            </button>
+                        </form>
+
+                        <a href="/products/list" class="btn btn-outline-secondary btn-lg py-3">Voltar ao Catálogo</a>
+                    </div>
+
+                    <div class="alert alert-info mt-4">
+                        <strong>Teste de Segurança:</strong> Minhas permissões atuais são:
+                        <span sec:authentication="principal.authorities"></span>
+                    </div>
+                    <div class="admin-section">
+
+                        <p class="text-danger fw-bold small mb-3">CONTROLE DE ESTOQUE (ADMIN)</p>
+                        <div class="d-flex gap-2">
+                            <a th:href="@{/products/edit/{id}(id=${product.id})}"
+                                class="btn btn-warning flex-grow-1 text-white fw-bold">
+                                EDITAR
+                            </a>
+                            <button th:onclick="'deleteProduct(' + ${product.id} + ')'"
+                                class="btn btn-danger flex-grow-1 fw-bold">
+                                EXCLUIR
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function deleteProduct(id) {
+            if (confirm('Deseja realmente excluir esta blusa do catálogo?')) {
+                fetch('/api/products/' + id, { method: 'DELETE' })
+                    .then(res => res.ok ? window.location.href = '/products/list' : alert('Erro ao excluir'))
+                    .catch(err => console.error(err));
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+/home/rafaelsoarescorgozinho/Downloads/loja_roupa/demo/src/main/java/com/example/demo/LojaRoupasApplication.java
+/home/rafaelsoarescorgozinho/Downloads/loja_roupa/demo/src/main/java/com/example/demo/controller/CartController.java
+/home/rafaelsoarescorgozinho/Downloads/loja_roupa/demo/src/main/java/com/example/demo/controller/ProductController.java
+/home/rafaelsoarescorgozinho/Downloads/loja_roupa/demo/src/main/java/com/example/demo/controller/ProductViewController.java
+/home/rafaelsoarescorgozinho/Downloads/loja_roupa/demo/src/main/java/com/example/demo/controller/UserController.java
+/home/rafaelsoarescorgozinho/Downloads/loja_roupa/demo/src/main/java/com/example/demo/exception/GlobalExceptionHandler.java
+/home/rafaelsoarescorgozinho/Downloads/loja_roupa/demo/src/main/java/com/example/demo/model/Product.java
+/home/rafaelsoarescorgozinho/Downloads/loja_roupa/demo/src/main/java/com/example/demo/model/Profile.java
+/home/rafaelsoarescorgozinho/Downloads/loja_roupa/demo/src/main/java/com/example/demo/model/User.java
+/home/rafaelsoarescorgozinho/Downloads/loja_roupa/demo/src/main/java/com/example/demo/repository/ProductRepository.java
+/home/rafaelsoarescorgozinho/Downloads/loja_roupa/demo/src/main/java/com/example/demo/repository/ProfileRepository.java
+/home/rafaelsoarescorgozinho/Downloads/loja_roupa/demo/src/main/java/com/example/demo/repository/UserRepository.java
+/home/rafaelsoarescorgozinho/Downloads/loja_roupa/demo/src/main/java/com/example/demo/security/SecurityConfig.java
+/home/rafaelsoarescorgozinho/Downloads/loja_roupa/demo/src/main/java/com/example/demo/service/CustomUserDetailsService.java
+/home/rafaelsoarescorgozinho/Downloads/loja_roupa/demo/src/main/java/com/example/demo/service/ProductService.java
+/home/rafaelsoarescorgozinho/Downloads/loja_roupa/demo/src/main/java/com/example/demo/service/UserService.java

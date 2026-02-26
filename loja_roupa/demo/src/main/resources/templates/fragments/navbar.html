@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<div th:fragment="navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3" href="/products/list">
+                🚀 <span class="text-primary">Rocket</span>Store
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/products/list">Catálogo</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link text-warning" href="/products/new">+ Novo Produto</a>
+                    </li>
+                </ul>
+
+                <div class="d-flex align-items-center gap-4">
+                    <a href="/cart" class="btn btn-outline-light px-3 position-relative">
+                        🛒 Carrinho
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                              th:text="${session.cart != null ? session.cart.size() : 0}">
+                            0
+                        </span>
+                    </a>
+
+                    <div class="text-light border-start ps-4 d-flex align-items-center gap-3">
+                        <div sec:authorize="isAuthenticated()" class="d-flex align-items-center gap-2">
+                            <small class="fw-light" sec:authentication="name">Usuário</small>
+                            <form th:action="@{/logout}" method="post" class="m-0">
+                                <button type="submit" class="btn btn-sm btn-link text-secondary text-decoration-none">Sair</button>
+                            </form>
+                        </div>
+                        <div sec:authorize="!isAuthenticated()">
+                            <a href="/login" class="btn btn-sm btn-primary">Entrar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+</body>
+</html>
